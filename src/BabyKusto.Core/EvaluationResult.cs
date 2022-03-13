@@ -10,7 +10,7 @@ namespace BabyKusto.Core.Evaluation
     {
         protected EvaluationResult(TypeSymbol type)
         {
-            Type = typoo;
+            Type = type;
         }
 
         public TypeSymbol Type { get; }
