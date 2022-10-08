@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0</TargetFrameworks>
-    <Nullable Condition=" '$(TargetFramework)' != 'netstandard2.0' ">enable</Nullable>
-    <LangVersion>10</LangVersion>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +11,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BabyKusto.Core\BabyKusto.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Kusto.Language" Version="11.0.0" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,8 @@
-﻿using System.Text.Json.Nodes;
+﻿using System.Collections.Generic;
+using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 
-namespace BabyKusto.SampleServer.Contract
+namespace BabyKusto.Server.Contract
 {
     public class KustoApiTableResult
     {

@@ -1,5 +1,5 @@
 using System.Text.Json.Nodes;
-using BabyKusto.SampleServer.Contract;
+using BabyKusto.Server.Contract;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BabyKusto.SampleServer.Controllers
@@ -16,12 +16,14 @@ namespace BabyKusto.SampleServer.Controllers
 
         [HttpPost]
         [Route("/v1/rest/mgmt")]
-        public IActionResult Execute(KustoMgmtRequestBody body)
+        public IActionResult Execute(KustoApiMgmtRequestBody body)
         {
             if (body == null)
             {
                 return this.BadRequest();
             }
+
+
 
             var result = new KustoApiResult();
             switch (body.Csl)

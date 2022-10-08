@@ -1,9 +1,9 @@
 ﻿using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 
-namespace BabyKusto.SampleServer.Contract
+namespace BabyKusto.Server.Contract
 {
-    public class KustoMgmtRequestBody
+    public class KustoApiMgmtRequestBody
     {
         [JsonPropertyName("csl")]
         public string? Csl { get; set; }
