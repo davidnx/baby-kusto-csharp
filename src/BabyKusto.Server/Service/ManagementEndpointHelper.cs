@@ -2,32 +2,21 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 using BabyKusto.Server.Contract;
 using Kusto.Language;
-using Kusto.Language.Symbols;
 using Kusto.Language.Syntax;
-using Microsoft.Extensions.Options;
 
 namespace BabyKusto.Server.Service
 {
     public class ManagementEndpointHelper
     {
-        private readonly BabyKustoServerOptions _options;
-        private readonly ITablesProvider _tablesProvider;
+        private readonly IBabyKustoServerState _state;
 
-        private readonly GlobalState _globals;
-
-        public ManagementEndpointHelper(IOptions<BabyKustoServerOptions> options, ITablesProvider tablesProvider)
+        public ManagementEndpointHelper(IBabyKustoServerState state)
         {
-            _options = options?.Value ?? throw new ArgumentNullException(nameof(options));
-            _tablesProvider = tablesProvider ?? throw new ArgumentNullException(nameof(tablesProvider));
-
-            _globals = GlobalState.Default.WithDatabase(new DatabaseSymbol(_options.DatabaseName));
+            _state = state ?? throw new ArgumentNullException(nameof(state));
         }
 
         public KustoApiResult Process(KustoApiMgmtRequestBody body)
@@ -38,7 +27,7 @@ namespace BabyKusto.Server.Service
                 throw new ArgumentNullException($"{nameof(body)}.{nameof(body.Csl)}");
             }
 
-            var code = KustoCode.ParseAndAnalyze(body.Csl, _globals);
+            var code = KustoCode.ParseAndAnalyze(body.Csl, _state.Globals);
 
             var diagnostics = code.GetDiagnostics();
             if (diagnostics.Count > 0)
@@ -82,7 +71,7 @@ namespace BabyKusto.Server.Service
                 throw new InvalidOperationException($"Expected a custom command expression, found {statement.Expression.GetType().FullName}.");
             }
 
-            var command = _globals.GetCommand(customCommand.CommandKind);
+            var command = _state.Globals.GetCommand(customCommand.CommandKind);
             if (command is null)
             {
                 throw new InvalidOperationException($"Unknown command {customCommand.CommandKind}.");
@@ -151,14 +140,14 @@ namespace BabyKusto.Server.Service
                 Rows =
                 {
                     new JsonArray(
-                        JsonValue.Create(_options.DatabaseName),
+                        JsonValue.Create(_state.Options.DatabaseName),
                         JsonValue.Create(""),
                         JsonValue.Create("v1.0"),
                         JsonValue.Create(false),
                         JsonValue.Create("ReadWrite"),
                         JsonValue.Create<string>(null),
                         JsonValue.Create<string>(null),
-                        JsonValue.Create(_options.DatabaseId),
+                        JsonValue.Create(_state.Options.DatabaseId),
                         JsonValue.Create("")
                     )
                 },
@@ -168,7 +157,7 @@ namespace BabyKusto.Server.Service
 
         private KustoApiResult ProcessShowSchemaCommand()
         {
-            var jsonSchema = JsonSchemaHelper.GetJsonSchema(_options, _tablesProvider);
+            var jsonSchema = JsonSchemaHelper.GetJsonSchema(_state.Options, _state.Tables);
 
             var result = new KustoApiResult();
             result.Tables.Add(

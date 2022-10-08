@@ -128,7 +128,8 @@ namespace BabyKusto.Server.Tests
                     DatabaseId = "fe60d09c-de8e-4832-9bd3-ee3f5a723a26", // Make it deterministic
                 });
             var tablesProvider = new ConstTablesProvider();
-            return new ManagementEndpointHelper(options, tablesProvider);
+            var state = new BabyKustoServerState(options, tablesProvider);
+            return new ManagementEndpointHelper(state);
         }
 
         private class ConstTablesProvider : ITablesProvider

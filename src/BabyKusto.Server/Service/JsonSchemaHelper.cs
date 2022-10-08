@@ -5,15 +5,16 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using BabyKusto.Core;
 
 namespace BabyKusto.Server.Service
 {
     internal static class JsonSchemaHelper
     {
-        public static string GetJsonSchema(BabyKustoServerOptions options, ITablesProvider tablesProvider)
+        public static string GetJsonSchema(BabyKustoServerOptions options, IEnumerable<ITableSource> tables)
         {
             _ = options ?? throw new ArgumentNullException(nameof(options));
-            _ = tablesProvider ?? throw new ArgumentNullException(nameof(tablesProvider));
+            _ = tables ?? throw new ArgumentNullException(nameof(tables));
 
             var database = new DatabaseSchema
             {
@@ -23,7 +24,7 @@ namespace BabyKusto.Server.Service
                 DatabaseAccessMode = "ReadWrite",
             };
 
-            foreach (var table in tablesProvider.GetTables())
+            foreach (var table in tables)
             {
                 var tableSchema = new TableSchema
                 {
