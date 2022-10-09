@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.Json.Nodes;
 using BabyKusto.Server.Contract;
 using Kusto.Language;
+using Kusto.Language.Symbols;
 using Kusto.Language.Syntax;
 
 namespace BabyKusto.Server.Service
@@ -105,11 +106,11 @@ namespace BabyKusto.Server.Service
                 {
                     TableName = "Table_0",
                     Columns = {
-                        new KustoApiColumnDescription { ColumnName = "BuildVersion", DataType = "String" },
-                        new KustoApiColumnDescription { ColumnName = "BuildTime", DataType = "DateTime" },
-                        new KustoApiColumnDescription { ColumnName = "ServiceType", DataType = "String" },
-                        new KustoApiColumnDescription { ColumnName = "ProductVersion", DataType = "String" },
-                        new KustoApiColumnDescription { ColumnName = "ServiceOffering", DataType = "String" },
+                        KustoApiColumnDescription.Create("BuildVersion", ScalarTypes.String),
+                        KustoApiColumnDescription.Create("BuildTime", ScalarTypes.DateTime),
+                        KustoApiColumnDescription.Create("ServiceType", ScalarTypes.String),
+                        KustoApiColumnDescription.Create("ProductVersion", ScalarTypes.String),
+                        KustoApiColumnDescription.Create("ServiceOffering", ScalarTypes.String),
                     },
                     Rows =
                     {
@@ -127,15 +128,15 @@ namespace BabyKusto.Server.Service
             {
                 TableName = "Table_0",
                 Columns = {
-                    new KustoApiColumnDescription { ColumnName = "DatabaseName", DataType = "String", ColumnType = "string" },
-                    new KustoApiColumnDescription { ColumnName = "PersistentStorage", DataType = "String", ColumnType = "string" },
-                    new KustoApiColumnDescription { ColumnName = "Version", DataType = "String", ColumnType = "string" },
-                    new KustoApiColumnDescription { ColumnName = "IsCurrent", DataType = "Boolean", ColumnType = "bool" },
-                    new KustoApiColumnDescription { ColumnName = "DatabaseAccessMode", DataType = "String", ColumnType = "string" },
-                    new KustoApiColumnDescription { ColumnName = "PrettyName", DataType = "String", ColumnType = "string" },
-                    new KustoApiColumnDescription { ColumnName = "ReservedSlot1", DataType = "Boolean", ColumnType = "bool" },
-                    new KustoApiColumnDescription { ColumnName = "DatabaseId", DataType = "Guid", ColumnType = "guid" },
-                    new KustoApiColumnDescription { ColumnName = "InTransitionTo", DataType = "String", ColumnType = "string" },
+                    KustoApiColumnDescription.Create("DatabaseName", ScalarTypes.String),
+                    KustoApiColumnDescription.Create("PersistentStorage", ScalarTypes.String),
+                    KustoApiColumnDescription.Create("Version", ScalarTypes.String),
+                    KustoApiColumnDescription.Create("IsCurrent", ScalarTypes.Bool),
+                    KustoApiColumnDescription.Create("DatabaseAccessMode", ScalarTypes.String),
+                    KustoApiColumnDescription.Create("PrettyName", ScalarTypes.String),
+                    KustoApiColumnDescription.Create("ReservedSlot1", ScalarTypes.Bool),
+                    KustoApiColumnDescription.Create("DatabaseId", ScalarTypes.Guid),
+                    KustoApiColumnDescription.Create("InTransitionTo", ScalarTypes.String),
                 },
                 Rows =
                 {
@@ -165,7 +166,7 @@ namespace BabyKusto.Server.Service
                 {
                     TableName = "Table_0",
                     Columns = {
-                        new KustoApiColumnDescription { ColumnName = "ClusterSchema", DataType = "String", ColumnType = "string" },
+                        KustoApiColumnDescription.Create("ClusterSchema", ScalarTypes.String),
                     },
                     Rows =
                     {

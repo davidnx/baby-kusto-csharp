@@ -40,13 +40,7 @@ namespace BabyKusto.Server.Service
             };
             foreach (var col in resultType.Columns)
             {
-                resultTable.Columns.Add(
-                    new KustoApiColumnDescription
-                    {
-                        ColumnName = col.Name,
-                        ColumnType = col.Type.Display,
-                        DataType = col.Type == ScalarTypes.String ? "String" : string.Empty,
-                    });
+                resultTable.Columns.Add(KustoApiColumnDescription.Create(col.Name, col.Type));
             }
 
             foreach (var chunk in tabularResult.Value.GetData())
